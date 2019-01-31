@@ -1,4 +1,4 @@
-package com.github.mrpanyu.excelimpexp;
+package com.github.mrpanyu.excel;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;

@@ -1,4 +1,4 @@
-package com.github.mrpanyu.excelimpexp;
+package com.github.mrpanyu.excel;
 
 import java.util.List;
 

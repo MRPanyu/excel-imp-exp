@@ -1,7 +1,8 @@
-package com.github.mrpanyu.excelimpexp;
+package com.github.mrpanyu.excel;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -71,18 +72,18 @@ public class ExcelImportExportTools {
 		}
 		return exp(data, modelClasses);
 	}
-
+	
 	/**
 	 * 将导入的Excel转换为模型对象
 	 * 
-	 * @param excelFile    Excel文件
+	 * @param excelInput    Excel文件输入流
 	 * @param modelClasses 导入模型信息，每个模型针对一个sheet页，如果有某个sheet页无需导入，可以传一个null值表示跳过
 	 * @return 转换后的模型对象，外侧List每个元素针对一个sheet页（无需导入的也会有个null值），内侧元素的List表示每个sheet页转换成的模型数据
 	 */
-	public static List<List<Object>> imp(byte[] excelFile, Class<?>... modelClasses) {
+	public static List<List<Object>> imp(InputStream excelInput, Class<?>... modelClasses) {
 		try {
 			List<List<Object>> result = new ArrayList<List<Object>>();
-			Workbook wb = new XSSFWorkbook(new ByteArrayInputStream(excelFile));
+			Workbook wb = new XSSFWorkbook(excelInput);
 			for (int i = 0; i < modelClasses.length; i++) {
 				if (modelClasses[i] == null) {
 					result.add(null);
@@ -98,6 +99,17 @@ public class ExcelImportExportTools {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	/**
+	 * 将导入的Excel转换为模型对象
+	 * 
+	 * @param excelFile    Excel文件内容
+	 * @param modelClasses 导入模型信息，每个模型针对一个sheet页，如果有某个sheet页无需导入，可以传一个null值表示跳过
+	 * @return 转换后的模型对象，外侧List每个元素针对一个sheet页（无需导入的也会有个null值），内侧元素的List表示每个sheet页转换成的模型数据
+	 */
+	public static List<List<Object>> imp(byte[] excelFile, Class<?>... modelClasses) {
+		return imp(new ByteArrayInputStream(excelFile), modelClasses);
 	}
 
 	/**

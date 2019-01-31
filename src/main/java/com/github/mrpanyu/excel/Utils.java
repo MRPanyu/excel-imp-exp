@@ -1,4 +1,4 @@
-package com.github.mrpanyu.excelimpexp;
+package com.github.mrpanyu.excel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
