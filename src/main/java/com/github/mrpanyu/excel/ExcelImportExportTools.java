@@ -162,6 +162,12 @@ public class ExcelImportExportTools {
 
 	/** 导入模板单sheet处理 */
 	private static void exportSheet(Workbook wb, Sheet sheet, Class<?> modelClass, List<Object> data) throws Exception {
+		// data不能为null或空数组，如果是这种情况插入一个元素（元素可以为null）作为样例行
+		if (data == null || data.isEmpty()) {
+			data = new ArrayList<Object>();
+			data.add(null);
+		}
+
 		List<ExcelColumnInfo> columnInfoList = getColumnInfos(modelClass);
 		// 样式
 		CellStyle[] headerCellStyles = new CellStyle[columnInfoList.size()];
